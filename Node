@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Node {
+
+	boolean value;
+	ArrayList<Node> neighbors;
+	int id;
+	boolean infected = false;
+	Queue<Node> notVisited;
+
+	public Node() {
+		// TODO Auto-generated constructor stub
+		neighbors = new ArrayList<Node>();
+		notVisited = new LinkedList<Node>();
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean getValue() {
+		return value;
+	}
+
+	public void setValue(boolean value) {
+		this.value = value;
+		//setInfected();
+	}
+
+	public ArrayList<Node> getNeighbors() {
+		return neighbors;
+	}
+
+	public void addNeighbor(Node node) {
+		neighbors.add(node);
+		notVisited.add(node);
+	}
+
+	public boolean isInfected() {
+		return infected;
+	}
+
+	//public void setInfected(boolean infected) {
+	//	this.infected = infected;
+	//}
+
+	//public void setInfected() {
+	//	setInfected(true);
+	//}
+
+	public Node infectNext(){
+		if(notVisited.isEmpty())
+			return null;
+		
+		Node nextNode= notVisited.poll();
+		
+		if(nextNode.getValue())
+			return infectNext();
+		nextNode.setValue(value);
+		return nextNode;
+		
+	}
+	
+}
