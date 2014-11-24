@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+public class Tree {
+
+	Node Root;
+	ArrayList<Node> theInfecting;
+	ArrayList<Node> theVisited;
+	ArrayList<Node> theTree;
+	static int treeRef = 1;
+
+	public Tree(Node theRoot) {
+		Root = theRoot;
+		Root.setValue(true);
+		theInfecting = new ArrayList<Node>();
+		theVisited = new ArrayList<Node>();
+		theTree = new ArrayList<Node>();
+		theInfecting.add(Root);
+		theTree.add(Root);
+	}
+
+	public void addNode(Node n) {
+		theTree.add(n);
+	}
+
+	public void tick() {
+		theVisited = new ArrayList<Node>(theInfecting.size());
+
+		for (Node node : theInfecting) {
+
+			Node temp = node.infectNext();
+			if (temp != null) {
+				theVisited.add(temp);
+				theVisited.add(node);
+			}
+		}
+
+		theInfecting = theVisited;
+
+	}
+
+}
