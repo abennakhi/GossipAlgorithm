@@ -1,0 +1,50 @@
+public class Mesh2d {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int iterations = 1;
+
+		Node nodes[] = new Node[1000];
+		int meshroot= (int) Math.sqrt(nodes.length);
+
+		for (int i = 0; i < nodes.length; i++) {
+			nodes[i] = new Node();
+			nodes[i].setId(i);
+			nodes[i].setValue(false);
+		}
+		
+		nodes[nodes.length/2].setValue(true);
+		
+		
+		for (int i = 0; i < nodes.length; i++) {
+			
+			if(i+1<nodes.length){
+			nodes[i].addNeighbor(nodes[i+1]);
+			nodes[i+1].addNeighbor(nodes[i]);}
+			
+			if(i+meshroot<nodes.length){
+			nodes[i].addNeighbor(nodes[i+meshroot]);
+			nodes[i+meshroot].addNeighbor(nodes[i]);}
+			
+		}
+
+		Tree maintree = new Tree(nodes[nodes.length/2]);
+		
+		for (int i = 1; i < nodes.length; i++) {
+			maintree.addNode(nodes[i]);
+		}
+		
+
+		do {
+
+			for (int i = 0; i < maintree.theVisited.size(); i++)
+				System.out.print("iteration " + iterations + " "
+						+ maintree.theVisited.get(i).id + " ");
+			System.out.println();
+			maintree.tick();
+			iterations++;
+		} while (!maintree.theInfecting.isEmpty());
+
+	}
+
+}
